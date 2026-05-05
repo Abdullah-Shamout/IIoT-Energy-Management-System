@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project develops an intelligent Industrial IoT (IIoT) Energy Management System designed to optimize energy consumption in industrial environments. Leveraging real-time data from IoT devices, an AI-powered agent provides energy optimization plans, budget monitoring, and device control through a natural language chatbot interface and a comprehensive dashboard.
+This project develops an intelligent Industrial IoT (IIoT) Energy Management System designed to maintain energy consumption in industrial environments over a period of time. Leveraging real-time data from IoT devices, an AI-powered agent provides energy optimization plans, budget monitoring, and device control through a natural language chatbot interface and a comprehensive dashboard.
 
 
 
@@ -10,7 +10,7 @@ This project develops an intelligent Industrial IoT (IIoT) Energy Management Sys
 
 - **Real-time Energy Monitoring:** Collects and visualizes energy consumption data from IoT devices (Motor, Fan, Light Bulb) in 15-second intervals.
 - **AI-Powered Optimization:** An intelligent agent (GPT-4) generates energy-saving schedules based on real-time data and predefined budgets.
-- **Three-Path Plan Approval System:** Operators can choose to:
+- **Three-Path For Schedule Approval System:** Operators can choose to:
     - **Apply Now:** Execute all actions in the plan immediately.
     - **Apply Scheduled:** Schedule each action to run at its planned time (Kuwait time, one-time execution for today), with automatic revert to previous state after the action window.
     - **Modify:** Customize the plan by changing parameters or deleting specific actions by number before approval.
@@ -20,7 +20,13 @@ This project develops an intelligent Industrial IoT (IIoT) Energy Management Sys
 - **Interactive Dashboard:** Provides a real-time overview of device statuses, energy consumption, budget comparison, and efficiency scores.
 - **Dark/Light Mode:** User-friendly interface with toggleable theme.
 
+## Use Case
 
+Our system can be used to monitor industrial factories energy consumption. The operator sets an energy budget and when the overall energy consumption of the factory exceeds the energy budget the Ai suggests optimization schedule that aims to reduce the energy consumption.
+Such schedule can be (This is just the actions part of the schedule. The schedule consists of other parts such as, predefined budget vs overall energy consumption comparison, discription of every device consumption, etc... These parts are well formated for better user experience):
+1- reduce motor intensity to 60% from 6:00pm to 10:pm.
+2- turn off the light bulb from 8:00pm to 10:pm.
+3- turn off the fan from 1:00am to 3:00am.
 
 ## User Interface
 
