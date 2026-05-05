@@ -147,13 +147,13 @@ The system is composed of a backend running on a Raspberry Pi and a frontend acc
 
 ## Team Members
 
-- Abdullah
+- Abdullah Shamout
 
-- Saloom
+- Sulaiman Alrefai
 
-- Tarek
+- Tarek Adi
 
-- Ahmed
+- Ahmed Osman
 
 ## License
 
