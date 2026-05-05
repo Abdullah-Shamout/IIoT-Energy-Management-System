@@ -1,0 +1,132 @@
+I want you to make a system for my final year project listen for the instructions carefully and don't add anything from your own unless you ask me:
+the idea of our final year project: a system that monitors the energy consumption of devices and have a chatbot that the user can interact with to turn on or off the devices or set the intensity(for some devices) asking questions etc... and it has a dashboard that displays the energy consumption in visual graphs and charts
+
+you should use to develop the front end of the system: HTML, CSS, JavaScript, and TypeScript. The core framework used is React.js, implemented using TSX components, which enables the creation of the dashboard and chatbot interface easily.
+you should use to develop the back end of the system:Flask, a lightweight Python framework utilized to build RESTful API endpoints that bridge the front-end with the system’s internal processing. and a self-hosted TimescaleDB. and python and MCP (model context protocol) and mqtt.
+
+I have 3 devices:
+1-Light bulb (id:1):it is an AC light bulb we will use the athom uk plug to monitor it is energy consumption (this is it is name Athom 16A UK V2 Power Monitoring Plug (PG04V2-UK16A-TAS)) search for it and learn how to control it and connect to it using mqtt. also I sent code to control and read data from the athom plug that I made learn from it. and it should have functionality on and off only no intensity control.
+2-Fan (id:2): it is a DC fan we will use to monitor it pzem-017 learn about it and I sent a code to read the data from it. also the pzem can not be used to turn off or on the fan. however, I would like to implement this thing virtually so the feature will be available and the user can control the state of the fan but it will be made as code. for example, we will have a variable called status and it will have true as defaulte value and when the user asks to turn off the fan it will become false and when he asks to turn it on it will be true so when the value of the status variable is true the readings from the pzem will be fetched through the database normally but when it is false it will be replaced with 0 even if the value coming from the pzem is not 0.
+3-Motor (id:3): the motor will be done by fully simulation so the motor has intensity and the max for it is 100 and when it is on max the motor consumes 350w and so you should make formula to calculate the energy consumption for the motor from it is intensity and also the motor should have turn off and on. here the same idea that is for the fan applies when the motor is one the data gets fetched normally but on it is off it will be replaced with zeros so make another status variable to the motor.
+
+the data should be read from the sensors and fetched in the database every 15 seconds.
+
+now let us talk about the system, how it will be?
+I uploaded 4 pictures look at them this is how the front end should look exactly. as you can see in the pictures there is two pages in the system that dashboard page and the chatbot page.
+the dashboard page should consist of a header, a pie chart and a device status card and 4 line graphs (Overall Energy Consumption,Fan Energy Consumption, Light Bulb Energy Consumption, Motor Energy Consumption). now let us dig deep into each component of the dashboard:
+1- header: it should consist of:
+	A. the title "Energy Management System".
+	B. the "Energy Budget" with the icon and other things with it. this should be clickable and when clicked a card will appear telling the user to input the new energy budget he wants. 	Moreover, it will be stored in the database so make the integration for it and it should be stored even after a shutdown for the system or a restart. it should be stored in table 	system_configuration in column energy_budget.
+	C. the "Current Consumption" with the icon and other things with it. this should be the sum of all energy consumed by the devices by second and it should be stored in the database so 	make the integration for it and it should be stored even after a shutdown for the system or a restart. it should be stored in table energy_consumption in column total_consumption. 	and to make things clear about the current consumption calculation logic for example the motor is consuming 350w per second so after 15 seconds the current consumption value should 	be 700w and so on but also consider that there is other devices than motor. finally when the current consumption is greater than the energy budget this should trigger an alert 	sent to the agent to suggest an energy optimization schedule. and this alert is sent just once every 10 minutes.
+	D. the "Remaining Budget" with the icon and other things with it. the remaining budget should be calculated by the formula: Energy budget-current consumption.and it should be stored 	in the database so make the integration for it and it should be stored even after a shutdown for the system or a restart.  it should be stored in table energy_consumption in column 	remaining_budget. 
+	E. the "Efficiency Score" with the icon and other things with it. this one you should figure out the formula for it. this should not be stored in the database.
+	F. the "Status" with the icon and other things with it. this should display normal if the energy budget is greater than or equal to the current consumption and it should display high 	if the energy budget is less than the current consumption. and it should be stored in the database so make the integration for it and it should be stored even after a shutdown for 	the system or a restart. it should be stored in table energy_consumption in column consumption_status.
+	G. the "84.0%" this is the energy consumption but in percentage. it should be calculated from the current consumption make the formula yourself this should not be stored in the 	database.
+	H. the "Moon and the sun" the button to switch between the dark mode and the light mode. obviously this should not be stored in the database.
+.it will sum values every 15 seconds because we gather the values from the sensors every 15 seconds
+2- pie chart: it should have four slices in it (Motor, Fan, Light Bulb, Remaining Budget) note before talking about the pie chart I want you to understand the you should make a script that adds up the consumption of each device (the script will sum up every device consumption before being fetched to the database.it will sum values every 15 seconds because we gather the values from the sensors every 15 seconds) and store it in the database in the iot_devices table in device_total_consumption to be used as the total consumption of the device tell now:
+	A. Motor: the motor consumption should be calculate from the device_total_consumption from the iot_devices table and it should be displayed in percentage. (each device has id check 	up to use to retireve the data)
+	B. Fan: the fan consumption should be calculate from the device_total_consumption from the iot_devices table and it should be displayed in percentage. (each device has id check up 	to use to retireve the data)
+	C. light bulb: the light bulb consumption should be calculate from the device_total_consumption from the iot_devices table and it should be displayed in percentage. (each device 	has id check up to use to retireve the data)
+	D. remaining budget: the remaining budget should be calculate from the remaining_budget from the energy_consumption table and it should be displayed in percentage.  (each device 	has id check up to use to retireve the data)
+3- the device status card: it should list all the devices and their status as in the picture (on/off) and it should get the status from the database from table iot_devices from device_status column. 
+
+4-line graphs:
+	A. overall Energy consumption line graph: the y axis should display the energy consumption in kwh and the x axis should display the time. the data will be used to draw the graph 	can be got from energy_consumption table from the total_consumption column.
+	B. for the Fan and light bulb and motor Energy Consumption line graphs: the data should be used from the database from the sensor_readings table use the data their to calculate the 
+	energy consumption in kwh and display it. 
+
+the dashboard should auto refresh every 15 seconds (all the dashboard including: header with all of it is components, pie chart, device status card, the 4 line graphs).
+
+note: also the line graphs and the pie and the device status should still memorize the data they have when the system restart or shutdown.
+
+now let us talk about the chat bot: I uploaded the prompt we made if you have any suggestion or improvments for it let me know. the chatbot we are using is the chatgpt-4.0 api. the chatbot should use MCP for any action he needs and he should be able to control the devices (on/off for all devices and intensity for only the motor). also he should be able to answer question such as what is the devices status or what is the total consumption now or what is the remaining budget or what is the status of the system now or generate for me a report about the consumption of the motor today or the user may ask suggest an energy optimization schedule and he should do it or answer Domain-Specific Knowledge questions such as: Ask the chatbot advanced energy related questions (usage calculations, efficiency analysis, device behavior). and the chatbot should provide correct, industry-related answers with clear reasoning based on stored data and context. make sure that the prompt best fit what is said and also evaluate it from your own view and let me know if you have any suggestion or improvments for it. also when any error occurs while the user asking let him print it in the chat.
+
+note: the header should be fixed when transporting between chatbot page and dashboard page
+
+please make sure to use the latest versions of the libraries and technologies I told you to use to build the system.
+
+this is our database schema I would like you to make the database according to it and if you have any suggestions or improvements let me know. note: after # is an explanation comment
+CREATE TABLE iot_devices (
+    id SERIAL PRIMARY KEY, # the id devices as I said in the beginning the light bulb has id 1 the fan has id 2 the motor has id 3 
+    device_name TEXT NOT NULL, # devices name 
+    device_intensity TEXT, # device intensity just for the motor as we don't have intensity control for the fan or the light bulb 
+    device_status TEXT, # device status on or off 
+    device_total_consumption DOUBLE PRECISION NOT NULL, # total consumption for each device it should be calculate by script
+);
+
+CREATE TABLE sensor_readings (
+    id SERIAL,
+    iot_device_id INT NOT NULL,
+    reading_time TIMESTAMPTZ NOT NULL,
+    voltage DOUBLE PRECISION,
+    current DOUBLE PRECISION,
+    power DOUBLE PRECISION,
+    PRIMARY KEY (reading_time, id) 
+);
+
+
+SELECT create_hypertable(
+    'sensor_readings',
+    'reading_time'
+);
+
+
+CREATE TABLE energy_consumption (
+    id SERIAL PRIMARY KEY,
+    iot_device_id INT NOT NULL,
+    period_start TIMESTAMPTZ NOT NULL,
+    period_end TIMESTAMPTZ NOT NULL,
+    total_consumption DOUBLE PRECISION NOT NULL,
+    remaining_budget DOUBLE PRECISION NOT NULL,
+    consumption_status TEXT
+);
+
+CREATE TABLE llm_plans (
+    id SERIAL PRIMARY KEY,
+    iot_device_id INT NOT NULL,
+    proposed_schedule JSON NOT NULL,
+    estimated_consumption DOUBLE PRECISION,
+    is_approved BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMPTZ NOT NULL
+);
+
+
+CREATE TABLE system_configuration (
+    id SERIAL PRIMARY KEY,
+    data_collection_frequency INT NOT NULL,
+    energy_budget DOUBLE PRECISION NOT NULL,
+    comparison_period TEXT NOT NULL
+);
+
+
+ALTER TABLE sensor_readings
+ADD CONSTRAINT fk_sensor_device
+FOREIGN KEY (iot_device_id)
+REFERENCES iot_devices(id);
+
+ALTER TABLE energy_consumption
+ADD CONSTRAINT fk_energy_device
+FOREIGN KEY (iot_device_id)
+REFERENCES iot_devices(id);
+
+ALTER TABLE llm_plans
+ADD CONSTRAINT fk_llm_device
+FOREIGN KEY (iot_device_id)
+REFERENCES iot_devices(id);
+
+-- (-- is a comment)
+-- The index speeds up the queries on a certan table.
+CREATE INDEX idx_sensor_device_time
+ON sensor_readings (iot_device_id, reading_time DESC);
+
+
+notes:
+I want the backend of the system to run on my raspberry pi and the front end on my laptop 
+the athom plug (the energy sensor will be used to read the energy consumption for the light bulb) will connect through wifi and we need to use mqtt protocol to access it 
+the pzem will be on port /dev/ttyUSB0 on the raspberry pi 
+I want you to make 1 md file to set up the system from zero meaning that I don't have anything installed on my raspberry pi or laptop but don't make trouble shoot section in it just the implementation 
+don't write any comments in any file you make
+
+
+if there is anything ambiguous ask me about it before implementing make sure you fully understand what I need and the system will work from 1st try. if there is nothing to ask me about explain what did you understand from me (how I want the system) and then ask for my approval to continue 
