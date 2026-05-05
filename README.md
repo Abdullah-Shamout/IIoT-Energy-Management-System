@@ -4,7 +4,7 @@
 
 This project develops an intelligent Industrial IoT (IIoT) Energy Management System designed to optimize energy consumption in industrial environments. Leveraging real-time data from IoT devices, an AI-powered agent provides energy optimization plans, budget monitoring, and device control through a natural language chatbot interface and a comprehensive dashboard.
 
-![Dashboard Overview](screenshots/ui%201.png)
+
 
 ## Key Features
 
@@ -20,7 +20,7 @@ This project develops an intelligent Industrial IoT (IIoT) Energy Management Sys
 - **Interactive Dashboard:** Provides a real-time overview of device statuses, energy consumption, budget comparison, and efficiency scores.
 - **Dark/Light Mode:** User-friendly interface with toggleable theme.
 
-![Chatbot Interaction](screenshots/ui%202.png)
+
 
 ## User Interface
 
@@ -28,11 +28,11 @@ The application features a modern, responsive user interface with both light and
 
 | Dashboard (Light Mode) | Dashboard (Dark Mode) |
 | :---: | :---: |
-|  | ![Dashboard Dark](screenshots/ui%204.png) ![Energy Charts](screenshots/ui%205.png) ![Dashboard Light](screenshots/ui%203.png)|
+| ![Dashboard Overview](screenshots/ui%201.png) ![Chatbot Interaction](screenshots/ui%202.png) | ![Dashboard Dark](screenshots/ui%204.png) ![Energy Charts](screenshots/ui%205.png) |
 
 | Chatbot Interface (Light Mode) | Chatbot Interface (Dark Mode)|
 | :---: | :---: |
-|  | ![Chatbot UI](screenshots/ui%206.png) |
+|![Dashboard Light](screenshots/ui%203.png)  | ![Chatbot UI](screenshots/ui%206.png) |
 
 ## System Architecture
 
