@@ -28,9 +28,9 @@ The application features a modern, responsive user interface with both light and
 
 | Dashboard (Light Mode) | Dashboard (Dark Mode) |
 | :---: | :---: |
-| ![Dashboard Light](screenshots/ui%203.png) | ![Dashboard Dark](screenshots/ui%204.png) ![Energy Charts](screenshots/ui%205.png) |
+|  | ![Dashboard Dark](screenshots/ui%204.png) ![Energy Charts](screenshots/ui%205.png) ![Dashboard Light](screenshots/ui%203.png)|
 
-| Energy Analytics | Chatbot Interface |
+| Chatbot Interface (Light Mode) | Chatbot Interface (Dark Mode)|
 | :---: | :---: |
 |  | ![Chatbot UI](screenshots/ui%206.png) |
 
